@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metals & Crypto - Smart Investment Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gold: #FFD700;
+            --primary-silver: #C0C0C0;
+            --crypto-blue: #00D4FF;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --text-light: #ffffff;
+            --text-muted: #888888;
+            --gradient-gold: linear-gradient(135deg, #FFD700, #FFA500);
+            --gradient-silver: linear-gradient(135deg, #C0C0C0, #808080);
+            --gradient-crypto: linear-gradient(135deg, #00D4FF, #0099CC);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--gradient-gold);
+            color: var(--dark-bg);
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 1000px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-gold), var(--primary-silver), var(--crypto-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        /* Investment Cards */
+        .investment-section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .investment-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .investment-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .investment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .investment-card:hover::before {
+            opacity: 1;
+        }
+
+        .investment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .investment-card.gold {
+            --gradient: var(--gradient-gold);
+        }
+
+        .investment-card.silver {
+            --gradient: var(--gradient-silver);
+        }
+
+        .investment-card.crypto {
+            --gradient: var(--gradient-crypto);
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .card-features li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .card-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-gold);
+        }
+
+        /* Market Data Section */
+        .market-data {
+            background: var(--darker-bg);
+            padding: 5rem 5%;
+            margin: 5rem 0;
+        }
+
+        .market-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .market-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .market-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: scale(1.05);
+        }
+
+        .market-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .market-change {
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        .positive {
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+        }
+
+        .negative {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff0000;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(0, 212, 255, 0.2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker-bg);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .investment-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Metals & Crypto</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#investments">Investments</a></li>
+                <li><a href="#market">Market</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#start" class="cta-button">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Invest in the Future of Wealth</h1>
+            <p>Diversify your portfolio with precious metals and cutting-edge cryptocurrencies. Your journey to financial freedom starts here.</p>
+            <a href="#investments" class="cta-button">Explore Investments</a>
+        </div>
+    </section>
+
+    <!-- Investment Options -->
+    <section class="investment-section" id="investments">
+        <h2 class="section-title">Choose Your Investment Path</h2>
+        <div class="investment-cards">
+            <div class="investment-card gold">
+                <div class="card-icon">🥇</div>
+                <h3 class="card-title">Gold Investment</h3>
+                <p class="card-description">Timeless wealth preservation with the ultimate safe-haven asset. Gold has maintained its value for thousands of years.</p>
+                <ul class="card-features">
+                    <li>Inflation hedge</li>
+                    <li>Portfolio diversification</li>
+                    <li>Global recognition</li>
+                    <li>Tangible asset</li>
+                </ul>
+                <a href="#" class="cta-button">Invest in Gold</a>
+            </div>
+
+            <div class="investment-card silver">
+                <div class="card-icon">🥈</div>
+                <h3 class="card-title">Silver Investment</h3>
+                <p class="card-description">Affordable precious metal with strong industrial demand. Silver offers excellent growth potential and value.</p>
+                <ul class="card-features">
+                    <li>Industrial applications</li>
+                    <li>Lower entry cost</li>
+                    <li>High volatility potential</li>
+                    <li>Green technology demand</li>
+                </ul>
+                <a href="#" class="cta-button">Invest in Silver</a>
+            </div>
+
+            <div class="investment-card crypto">
+                <div class="card-icon">₿</div>
+                <h3 class="card-title">Cryptocurrency</h3>
+                <p class="card-description">Digital assets revolutionizing finance. Join the future of money with leading cryptocurrencies.</p>
+                <ul class="card-features">
+                    <li>High growth potential</li>
+                    <li>24/7 trading</li>
+                    <li>Decentralized finance</li>
+                    <li>Innovation exposure</li>
+                </ul>
+                <a href="#" class="cta-button">Invest in Crypto</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Data -->
+    <section class="market-data" id="market">
+        <h2 class="section-title">Live Market Prices</h2>
+        <div class="market-container">
+            <div class="market-item">
+                <h3>Gold</h3>
+                <div class="market-price" style="color: var(--primary-gold);">$2,045.30</div>
+                <div class="market-change positive">+1.2%</div>
+            </div>
+            <div class="market-item">
+                <h3>Silver</h3>
+                <div class="market-price" style="color: var(--primary-silver);">$25.47</div>
+                <div class="market-change negative">-0.8%</div>
+            </div>
+            <div class="market-item">
+                <h3>Bitcoin</h3>
+                <div class="market-price" style="color: var(--crypto-blue);">$43,250.00</div>
+                <div class="market-change positive">+3.5%</div>
+            </div>
+            <div class="market-item">
+                <h3>Ethereum</h3>
+                <div class="market-price" style="color: var(--crypto-blue);">$2,285.50</div>
+                <div class="market-change positive">+2.1%</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <h2 class="section-title">Why Choose Us</h2>
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure Storage</h3>
+                <p>Military-grade security for your investments with cold storage and multi-signature protection.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <h3>Real-time Analytics</h3>
+                <p>Advanced charts and market insights to help you make informed investment decisions.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🌍</div>
+                <h3>Global Access</h3>
+                <p>Invest from anywhere in the world with our international platform and multi-currency support.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💰</div>
+                <h3>Low Fees</h3>
+                <p>Competitive pricing with transparent fee structure. No hidden costs or surprise charges.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎓</div>
+                <h3>Expert Guidance</h3>
+                <p>Educational resources and expert insights to help you navigate the investment landscape.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Trading</h3>
+                <p>Trade on the go with our fully-featured mobile app available on iOS and Android.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Support</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+            </div>
+            <p>&copy; 2024 Metals & Crypto. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
